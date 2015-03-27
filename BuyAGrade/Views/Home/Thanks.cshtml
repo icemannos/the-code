@@ -1,0 +1,12 @@
+﻿@model BuyAGrade.Models.Customer
+
+@{
+    ViewBag.Title = "Thanks";
+}
+
+<h1>Thank You, @Model.Name!</h1>
+
+<hr />
+
+<div>We have charged your @Model.CardType number @Model.CardNumber for $@Model.AmountPaid</div>
+<div>Based on this payment, your grade in @Model.Course will be "@ViewBag.Grade"</div>

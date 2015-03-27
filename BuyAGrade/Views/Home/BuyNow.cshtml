@@ -1,0 +1,46 @@
+﻿
+@{
+    ViewBag.Title = "BuyNow";
+}
+
+<form action="/Home/BuyNow" method="post" class="form-horizontal">
+    <fieldset>
+        <legend>Give Us Your Money</legend>
+        <div class="form-group">
+            <label for="name" class="col-sm-2 control-label">Name</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" name="name" required />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="Course" class="col-sm-2 control-label">Course</label>
+            <div class="col-sm-10">
+                @Html.DropDownList("Course", (IEnumerable<SelectListItem>)ViewBag.Courses)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <input type="radio" id="v" name="CardType" value="Visa" required /> Visa
+                <input type="radio" id="mc" name="CardType" value="Mastercard" required /> Mastercard
+                <input type="radio" id="ae" name="CardType" value="American Express" required /> American Express
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="cardnum" class="col-sm-2 control-label">Credit Card Number</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="text" id="cardnum" name="CardNumber" required />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="amount" class="col-sm-2 control-label">Amount Paid</label>
+            <div class="col-sm-10">
+                <input class="form-control" type="number" id="amount" name="AmountPaid" required />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <input type="submit" value="Buy now" />
+            </div>
+        </div>
+    </fieldset>
+</form>
