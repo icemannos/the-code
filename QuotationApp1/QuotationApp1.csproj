@@ -173,6 +173,18 @@
     <Compile Include="Migrations\201503271849270_ChangeProp1.Designer.cs">
       <DependentUpon>201503271849270_ChangeProp1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201503310016567_ChangeProp11.cs" />
+    <Compile Include="Migrations\201503310016567_ChangeProp11.Designer.cs">
+      <DependentUpon>201503310016567_ChangeProp11.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201503310042167_mig1.cs" />
+    <Compile Include="Migrations\201503310042167_mig1.Designer.cs">
+      <DependentUpon>201503310042167_mig1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504050123211_mig2.cs" />
+    <Compile Include="Migrations\201504050123211_mig2.Designer.cs">
+      <DependentUpon>201504050123211_mig2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Category.cs" />
@@ -261,6 +273,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201503271849270_ChangeProp1.resx">
       <DependentUpon>201503271849270_ChangeProp1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503310016567_ChangeProp11.resx">
+      <DependentUpon>201503310016567_ChangeProp11.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201503310042167_mig1.resx">
+      <DependentUpon>201503310042167_mig1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504050123211_mig2.resx">
+      <DependentUpon>201504050123211_mig2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

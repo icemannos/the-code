@@ -22,3 +22,11 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.webGrid { 
+    margin: 5px; border-collapse: collapse;
+}
+
+.webGrid th, .webGrid td { 
+    padding: 10px; 
+}

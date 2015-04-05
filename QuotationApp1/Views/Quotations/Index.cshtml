@@ -9,44 +9,21 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            Category
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Quote)
-        </th>
-        <th>
-            @Html.ActionLink("Author", "Index", new { sortOrder = ViewBag.AuthorSortParm })
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Date)
-        </th>
-        <th></th>
-    </tr>
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quote)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Author)
-            </td>
-            <td>
-                @item.Date.ToShortDateString()
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.QuotationID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.QuotationID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.QuotationID })
-            </td>
-        </tr>
-    }
+@{
+    var grid = new WebGrid(Model, canPage: true, rowsPerPage: 20, ajaxUpdateContainerId: "gridContent"); grid.Pager(WebGridPagerModes.NextPrevious);}
 
-</table>
+<div id="gridContent">
+    @grid.GetHtml(
+            tableStyle: "webGrid",
+            columns: grid.Columns(
+            grid.Column("Category.Name", "Category", canSort: true),
+            grid.Column("Quote", "Quote", canSort: false),
+            grid.Column("Author", "Author", canSort: true),
+            grid.Column("Date", "Date", format: (item) => string.Format("{0:MM/dd/yyyy}", item.Date), canSort: true),
+            grid.Column(null, null, format: (item) => Html.ActionLink("Edit", "Edit", new { id = item.QuotationID })),
+            grid.Column(null, null, format: (item) => Html.ActionLink("Details", "Details", new { id = item.QuotationID })),
+            grid.Column(null, null, format: (item) => Html.ActionLink("Delete", "Delete", new { id = item.QuotationID }))
+     ))
+</div>
+

@@ -60,7 +60,7 @@ namespace QuotationApp1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "QuotationID,Quote,Author,Date,CategoryID")] Quotation quotation)
+        public ActionResult Create([Bind(Include = "QuotationID,Quote,Author,Date,CategoryID,CreateCategory")] Quotation quotation)
         {
             if (ModelState.IsValid)
             {
