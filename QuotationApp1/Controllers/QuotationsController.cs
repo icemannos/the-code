@@ -16,20 +16,22 @@ namespace QuotationApp1.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Quotations
-        public ActionResult Index(string sortOrder)
+        public ActionResult Index(string searchString)
         {
-            ViewBag.AuthorSortParm = String.IsNullOrEmpty(sortOrder) ? "author_desc" : "";
             var quotations = from s in db.Quotations.Include(q => q.Category)
                              select s;
-            switch (sortOrder)
+
+            ViewBag.ShowButton = false;
+
+            if (!String.IsNullOrEmpty(searchString))
             {
-                case "author_desc":
-                    quotations = quotations.OrderByDescending(s => s.Author);
-                    break;
-                default:
-                    quotations = quotations.OrderBy(s => s.Author);
-                    break;
+                quotations = quotations.Where(s => s.Quote.Contains(searchString)
+                                       || s.Author.Contains(searchString) || s.Category.Name.Contains(searchString));
+
+                ViewBag.ShowButton = true;
             }
+
+
             return View(quotations.ToList());
         }
 
@@ -49,6 +51,7 @@ namespace QuotationApp1.Controllers
         }
 
         // GET: Quotations/Create
+        [Authorize]
         public ActionResult Create()
         {
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name");
@@ -62,6 +65,7 @@ namespace QuotationApp1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "QuotationID,Quote,Author,Date,CategoryID,CreateCategory")] Quotation quotation)
         {
+
             if (ModelState.IsValid)
             {
                 db.Quotations.Add(quotation);
@@ -69,11 +73,42 @@ namespace QuotationApp1.Controllers
                 return RedirectToAction("Index");
             }
 
+            if (quotation.CreateCategory != null)
+            {
+                if (!db.Categories.Any(x => x.Name == quotation.CreateCategory))
+                {
+                    string name = quotation.CreateCategory;
+                    int categoryId = 0;
+                    return CreateNew(categoryId, name, quotation);
+                }
+                else
+                {
+                    ModelState.AddModelError("CategoryError", "That Category already exists.");
+                }
+            }
+            else
+            {
+                ModelState.AddModelError("EmptyError", "The CategoryID field is required.");
+            }
+
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name", quotation.CategoryID);
             return View(quotation);
         }
 
+        public ActionResult CreateNew(int categoryId, string name, Quotation quotation)
+        {
+            Category category = new Category();
+            category.CategoryID = categoryId;
+            category.Name = name;
+
+            db.Categories.Add(category);
+            db.Quotations.Add(quotation);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
         // GET: Quotations/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -107,6 +142,7 @@ namespace QuotationApp1.Controllers
         }
 
         // GET: Quotations/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)

@@ -23,8 +23,22 @@ textarea {
     max-width: 280px;
 }
 
+.webGrid a {
+    color: #2780E3;
+}
+
+.webGrid a:hover {
+    text-decoration: none;
+    color: #0094ff;
+}
+
 .webGrid { 
-    margin: 5px; border-collapse: collapse;
+    margin: 5px; border-collapse: collapse; 
+}
+
+.webGrid-header {
+    background-color: lightgray;
+    color: #2780E3;
 }
 
 .webGrid th, .webGrid td { 
