@@ -185,6 +185,10 @@
     <Compile Include="Migrations\201504050123211_mig2.Designer.cs">
       <DependentUpon>201504050123211_mig2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201504081935104_mig3.cs" />
+    <Compile Include="Migrations\201504081935104_mig3.Designer.cs">
+      <DependentUpon>201504081935104_mig3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Category.cs" />
@@ -204,6 +208,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\mfoxquotationlab.pubxml" />
+    <None Include="Properties\PublishProfiles\mfoxquotationlabv2.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -256,6 +261,7 @@
     <Content Include="Views\Quotations\Details.cshtml" />
     <Content Include="Views\Quotations\Edit.cshtml" />
     <Content Include="Views\Quotations\Index.cshtml" />
+    <Content Include="Views\Quotations\MyQuotes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -282,6 +288,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504050123211_mig2.resx">
       <DependentUpon>201504050123211_mig2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504081935104_mig3.resx">
+      <DependentUpon>201504081935104_mig3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

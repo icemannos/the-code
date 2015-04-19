@@ -8,18 +8,142 @@ using System.Web;
 using System.Web.Mvc;
 using QuotationApp1;
 using QuotationApp1.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace QuotationApp1.Controllers
 {
     public class QuotationsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private UserManager<ApplicationUser> manager;
+        private List<string> hideItems;
+        private List<int> hideItemsInt;
+
+        public QuotationsController()
+        {
+             manager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+        }
+
+        public ActionResult Hide(int id, bool mine)
+        {
+            var cookie = Request.Cookies.Get("HideCookie");
+            if (cookie == null)
+            {
+                cookie = new HttpCookie("HideCookie");
+                hideItems = new List<string>() { id.ToString() };
+                hideItemsInt = new List<int>() { id };
+                cookie.Value = id.ToString();
+                cookie.Expires = DateTime.Now.AddYears(1);
+                Response.Cookies.Add(cookie);
+            }
+            else
+            {
+                cookie = Request.Cookies.Get("HideCookie");
+                hideItems = cookie.Value.Split(',').ToList();
+                hideItemsInt = new List<int>() { };
+                foreach (string element in hideItems)
+                {
+                    hideItemsInt.Add(int.Parse(element));
+                }
+                hideItems.Add(id.ToString());
+                hideItemsInt.Add(id);
+                cookie.Value = string.Join(",", hideItems);
+                Response.Cookies.Add(cookie);
+            }
+
+            if (mine == true)
+            {
+                return RedirectToAction("MyQuotes");
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+        }
+
+        public ActionResult Unhide()
+        {
+            var cookie = Request.Cookies.Get("HideCookie");
+            cookie.Expires = DateTime.Now.AddYears(-1);
+            Response.Cookies.Add(cookie);
+
+            return RedirectToAction("Index");
+        }
 
         // GET: Quotations
         public ActionResult Index(string searchString)
         {
             var quotations = from s in db.Quotations.Include(q => q.Category)
+                             where !hideItemsInt.Contains(s.QuotationID)
                              select s;
+
+            var cookie = Request.Cookies.Get("HideCookie");
+            if (cookie == null)
+            {
+                hideItems = new List<string>() { };
+                hideItemsInt = new List<int>() { };
+                ViewBag.Hide = false;
+            }
+            else
+            {
+                cookie = Request.Cookies.Get("HideCookie");
+                hideItems = cookie.Value.Split(',').ToList();
+                hideItemsInt = new List<int>() { };
+                foreach (string element in hideItems)
+                {
+                    hideItemsInt.Add(int.Parse(element));
+                }
+                ViewBag.Hide = true;
+            }
+
+            ViewBag.ShowButton = false;
+            ViewBag.Mine = false;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                quotations = quotations.Where(s => s.Quote.Contains(searchString)
+                                       || s.Author.Contains(searchString) || s.Category.Name.Contains(searchString));
+
+                ViewBag.ShowButton = true;
+            }
+
+            if (User.Identity.IsAuthenticated)
+            {
+                ViewBag.Mine = true;
+            }
+
+            return View(quotations.ToList());
+        }
+
+        public ActionResult MyQuotes(string searchString)
+        {
+            var quotations = from s in db.Quotations.Include(q => q.Category)
+                             where !hideItemsInt.Contains(s.QuotationID)
+                             select s;
+
+            var cookie = Request.Cookies.Get("HideCookie");
+            if (cookie == null)
+            {
+                hideItems = new List<string>() { };
+                hideItemsInt = new List<int>() { };
+                ViewBag.Hide = false;
+            }
+            else
+            {
+                cookie = Request.Cookies.Get("HideCookie");
+                hideItems = cookie.Value.Split(',').ToList();
+                hideItemsInt = new List<int>() { };
+                foreach (string element in hideItems)
+                {
+                    hideItemsInt.Add(int.Parse(element));
+                }
+                ViewBag.Hide = true;
+            }
+
+            string username = User.Identity.GetUserId();
+
+            quotations = quotations.Where(s => s.Username.Contains(username));
 
             ViewBag.ShowButton = false;
 
@@ -30,7 +154,6 @@ namespace QuotationApp1.Controllers
 
                 ViewBag.ShowButton = true;
             }
-
 
             return View(quotations.ToList());
         }
@@ -63,8 +186,9 @@ namespace QuotationApp1.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "QuotationID,Quote,Author,Date,CategoryID,CreateCategory")] Quotation quotation)
+        public ActionResult Create([Bind(Include = "QuotationID,Quote,Author,Date,CategoryID,CreateCategory,Username")] Quotation quotation)
         {
+            quotation.Username = User.Identity.GetUserId();
 
             if (ModelState.IsValid)
             {

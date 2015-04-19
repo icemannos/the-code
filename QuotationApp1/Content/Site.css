@@ -33,7 +33,9 @@ textarea {
 }
 
 .webGrid { 
-    margin: 5px; border-collapse: collapse; 
+    margin: 5px;
+    border-collapse: collapse;
+    width: 100%;
 }
 
 .webGrid-header {

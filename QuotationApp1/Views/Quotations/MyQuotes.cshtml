@@ -9,17 +9,15 @@
 <p>
     <a class="btn btn-primary btn-success" href="/Quotations/Create">Add a New Quote</a>
 
-    @if (ViewBag.Mine)
-    {
-        <a class="btn btn-primary" href="/Quotations/MyQuotes">Show My Quotes</a>
-    }
+    <a class="btn btn-primary" href="/Quotations">Show All Quotes</a>
+
 </p>
 
 @using (Html.BeginForm())
 {
     <p>
         <input class="btn btn-info btn-sm" type="submit" value="Search" />
-        @Html.TextBox("SearchString", null, new { style = "width: 200px; height: 30px; padding-left: 5px", htmlAttributes = new { @class = "form-control" } })
+        @Html.TextBox("SearchString", null, new { style = "width: 200px; height: 30px; padding-left: 5px", htmlAttributes = new { @class = "form-control"} })
 
         @if (ViewBag.ShowButton)
         {
@@ -44,9 +42,10 @@
             grid.Column("Quote", "Quote", canSort: false),
             grid.Column("Author", "Author", canSort: true),
             grid.Column("Date", "Date", format: (item) => string.Format("{0:MM/dd/yyyy}", item.Date), canSort: true),
+            grid.Column(null, null, format: (item) => Html.ActionLink("Edit", "Edit", new { id = item.QuotationID })),
             grid.Column(null, null, format: (item) => Html.ActionLink("Details", "Details", new { id = item.QuotationID })),
-            grid.Column(null, null, format: (item) => Html.ActionLink("Hide", "Hide", new { id = item.QuotationID, mine = false }))
-
+            grid.Column(null, null, format: (item) => Html.ActionLink("Delete", "Delete", new { id = item.QuotationID })),
+            grid.Column(null, null, format: (item) => Html.ActionLink("Hide", "Hide", new { id = item.QuotationID, mine = true }))
      ))
 </div>
 

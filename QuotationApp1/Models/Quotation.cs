@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using QuotationApp1.Models;
 
 namespace QuotationApp1
 {
@@ -18,5 +19,7 @@ namespace QuotationApp1
         public virtual Category Category { get; set; }
         public int CategoryID { get; set; }
         public string CreateCategory { get; set; }
+        public virtual ApplicationUser ApplicationUser  { get; set; }
+        public string Username { get; set; }
     }
 }
