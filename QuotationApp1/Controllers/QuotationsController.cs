@@ -62,13 +62,20 @@ namespace QuotationApp1.Controllers
             }
         }
 
-        public ActionResult Unhide()
+        public ActionResult Unhide(bool mine)
         {
             var cookie = Request.Cookies.Get("HideCookie");
             cookie.Expires = DateTime.Now.AddYears(-1);
             Response.Cookies.Add(cookie);
 
-            return RedirectToAction("Index");
+            if (mine == true)
+            {
+                return RedirectToAction("MyQuotes");
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         // GET: Quotations

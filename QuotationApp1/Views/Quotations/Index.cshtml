@@ -7,11 +7,11 @@
 <h2>Quotations</h2>
 
 <p>
-    <a class="btn btn-primary btn-success" href="/Quotations/Create">Add a New Quote</a>
+    @Html.ActionLink("Add a New Quote", "Create", null, new { @class = "btn btn-primary btn-success" })
 
     @if (ViewBag.Mine)
     {
-        <a class="btn btn-primary" href="/Quotations/MyQuotes">Show My Quotes</a>
+        @Html.ActionLink("Show My Quotes", "MyQuotes", null, new { @class = "btn btn-primary" })
     }
 </p>
 
@@ -23,11 +23,11 @@
 
         @if (ViewBag.ShowButton)
         {
-            <a class="btn btn-primary btn-sm" href="/Quotations">Clear</a>
+            @Html.ActionLink("Clear", "Index", null, new { @class = "btn btn-primary btn-sm" })
         }
         @if (ViewBag.Hide)
         {
-            <a class="btn btn-primary btn-sm" href="/Quotations/Unhide">Unhide</a>
+            @Html.ActionLink("Unhide", "Unhide", new { mine = false}, new { @class = "btn btn-primary btn-sm" })
         }
     </p>
 }

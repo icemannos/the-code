@@ -209,6 +209,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\mfoxquotationlab.pubxml" />
     <None Include="Properties\PublishProfiles\mfoxquotationlabv2.pubxml" />
+    <None Include="Properties\PublishProfiles\mfoxquotationlabv21.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
