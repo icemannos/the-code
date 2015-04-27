@@ -24,7 +24,7 @@
 }
 
 @{
-    var grid = new WebGrid(Model, canPage: true, rowsPerPage: 20, ajaxUpdateContainerId: "gridContent"); grid.Pager(WebGridPagerModes.NextPrevious);}
+    var grid = new WebGrid(Model, canPage: true, rowsPerPage: 7, ajaxUpdateContainerId: "gridContent"); grid.Pager(WebGridPagerModes.NextPrevious);}
 
 <div id="gridContent">
     @grid.GetHtml(
