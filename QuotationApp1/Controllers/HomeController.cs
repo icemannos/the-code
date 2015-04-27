@@ -17,6 +17,13 @@ namespace QuotationApp1.Controllers
         {
             ViewBag.Message = "A database of quotations.";
 
+            ViewBag.Admin = false;
+
+            if (User.IsInRole("admin"))
+            {
+                ViewBag.Admin = true;
+            }
+
             return View();
         }
 

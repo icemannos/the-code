@@ -36,7 +36,25 @@
     var grid = new WebGrid(Model, canPage: true, rowsPerPage: 20, ajaxUpdateContainerId: "gridContent"); grid.Pager(WebGridPagerModes.NextPrevious);}
 
 <div id="gridContent">
-    @grid.GetHtml(
+    @if (ViewBag.Admin)
+    {
+        @grid.GetHtml(
+            tableStyle: "webGrid",
+            headerStyle: "webGrid-header",
+            columns: grid.Columns(
+            grid.Column("Category.Name", "Category", canSort: true),
+            grid.Column("Quote", "Quote", canSort: false),
+            grid.Column("Author", "Author", canSort: true),
+            grid.Column("Date", "Date", format: (item) => string.Format("{0:MM/dd/yyyy}", item.Date), canSort: true),
+            grid.Column(null, null, format: (item) => Html.ActionLink("Edit", "Edit", new { id = item.QuotationID })),
+            grid.Column(null, null, format: (item) => Html.ActionLink("Details", "Details", new { id = item.QuotationID })),
+            grid.Column(null, null, format: (item) => Html.ActionLink("Delete", "Delete", new { id = item.QuotationID })),
+            grid.Column(null, null, format: (item) => Html.ActionLink("Hide", "Hide", new { id = item.QuotationID, mine = false }))
+     ))
+    }
+    else
+    {
+        @grid.GetHtml(
             tableStyle: "webGrid",
             headerStyle: "webGrid-header",
             columns: grid.Columns(
@@ -46,7 +64,7 @@
             grid.Column("Date", "Date", format: (item) => string.Format("{0:MM/dd/yyyy}", item.Date), canSort: true),
             grid.Column(null, null, format: (item) => Html.ActionLink("Details", "Details", new { id = item.QuotationID })),
             grid.Column(null, null, format: (item) => Html.ActionLink("Hide", "Hide", new { id = item.QuotationID, mine = false }))
-
      ))
+    }
 </div>
 

@@ -106,6 +106,7 @@ namespace QuotationApp1.Controllers
 
             ViewBag.ShowButton = false;
             ViewBag.Mine = false;
+            ViewBag.Admin = false;
 
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -118,6 +119,11 @@ namespace QuotationApp1.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 ViewBag.Mine = true;
+            }
+
+            if (User.IsInRole("admin"))
+            {
+                ViewBag.Admin = true;
             }
 
             return View(quotations.ToList());
@@ -148,7 +154,7 @@ namespace QuotationApp1.Controllers
                 ViewBag.Hide = true;
             }
 
-            string username = User.Identity.GetUserId();
+            string username = User.Identity.GetUserName();
 
             quotations = quotations.Where(s => s.Username.Contains(username));
 
@@ -195,7 +201,7 @@ namespace QuotationApp1.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "QuotationID,Quote,Author,Date,CategoryID,CreateCategory,Username")] Quotation quotation)
         {
-            quotation.Username = User.Identity.GetUserId();
+            quotation.Username = User.Identity.GetUserName();
 
             if (ModelState.IsValid)
             {

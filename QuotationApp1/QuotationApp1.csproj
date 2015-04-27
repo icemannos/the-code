@@ -159,6 +159,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\QuotationsController.cs" />
@@ -188,6 +189,10 @@
     <Compile Include="Migrations\201504081935104_mig3.cs" />
     <Compile Include="Migrations\201504081935104_mig3.Designer.cs">
       <DependentUpon>201504081935104_mig3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201504250432080_mig4.cs" />
+    <Compile Include="Migrations\201504250432080_mig4.Designer.cs">
+      <DependentUpon>201504250432080_mig4.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -263,6 +268,9 @@
     <Content Include="Views\Quotations\Edit.cshtml" />
     <Content Include="Views\Quotations\Index.cshtml" />
     <Content Include="Views\Quotations\MyQuotes.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\Delete.cshtml" />
+    <Content Include="Views\Admin\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -292,6 +300,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201504081935104_mig3.resx">
       <DependentUpon>201504081935104_mig3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201504250432080_mig4.resx">
+      <DependentUpon>201504250432080_mig4.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
